@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+WEBPACK_DEV_SERVER = "localhost:8080"
 
 # Application definition
 
@@ -122,5 +123,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# In debug mode serve files from webpack dev server for auto reloading
+if DEBUG:
+    STATIC_URL = 'http://{}/static/'.format(WEBPACK_DEV_SERVER,)
+else:
+    STATIC_URL = '/static/'

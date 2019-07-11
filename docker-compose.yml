@@ -7,8 +7,10 @@ services:
       - .:/code
     ports:
       - "8000:8000"
+      - "8080:8080"
     depends_on:
       - db
+    command: ["/code/wait-for-it.sh", "db:5432", "--", "bash", "/code/docker/web/web-entrypoint.sh"]
   db:
     hostname: db
     image: postgres:11.4
