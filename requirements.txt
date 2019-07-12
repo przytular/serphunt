@@ -2,10 +2,14 @@ beautifulsoup4==4.7.1
 certifi==2019.6.16
 chardet==3.0.4
 Django==2.2.3
+django-csp==3.5
 idna==2.8
+pipenv==2018.11.26
 psycopg2==2.8.3
 pytz==2019.1
 requests==2.22.0
 soupsieve==1.9.2
 sqlparse==0.3.0
 urllib3==1.25.3
+virtualenv==16.6.1
+virtualenv-clone==0.5.3

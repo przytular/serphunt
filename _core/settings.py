@@ -25,7 +25,7 @@ SECRET_KEY = '*pz6w-p&%30!nbi7xka8cavt*sse!3ehdo@saiuh)6pyq^wglv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 WEBPACK_DEV_SERVER = "localhost:8080"
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'serp',
+    'csp'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
 
 ROOT_URLCONF = '_core.urls'
@@ -130,3 +132,11 @@ if DEBUG:
     STATIC_URL = 'http://{}/static/'.format(WEBPACK_DEV_SERVER,)
 else:
     STATIC_URL = '/static/'
+
+
+# Content Security Policy
+
+CSP_DEFAULT_SRC = ("'self'", WEBPACK_DEV_SERVER)
+CSP_SCRIPT_SRC = ("'self'", "*", WEBPACK_DEV_SERVER, "'unsafe-eval'")
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", WEBPACK_DEV_SERVER)
+CSP_CONNECT_SRC = ("'self'", WEBPACK_DEV_SERVER, "ws:")

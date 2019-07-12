@@ -12,5 +12,33 @@ module.exports = {
 		host: '0.0.0.0',
 		sockPort: 8080,
 		publicPath: '/static/'
+	},
+	module: {
+		rules: [
+			{
+			test: /\.(scss)$/,
+			use: [
+				{
+					loader: 'style-loader'
+				},
+				{
+					loader: 'css-loader'
+				},
+				{
+					loader: 'postcss-loader',
+					options: {
+						plugins: function () {
+						return [
+							require('autoprefixer')
+						];
+						}
+					}
+				},
+				{
+					loader: 'sass-loader'
+				}
+			]
+			}
+		]
 	}
-}
+};
