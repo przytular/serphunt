@@ -5,6 +5,7 @@ services:
     hostname: web
     volumes:
       - .:/code
+      - node_modules_container:/code/node_modules
     ports:
       - "8000:8000"
       - "8080:8080"
@@ -16,5 +17,6 @@ services:
     image: postgres:11.4
     expose:
       - "5432"
-    volumes:
-      - .:/code
+
+volumes:
+  node_modules_container:
