@@ -16,14 +16,24 @@ module.exports = {
 	module: {
 		rules: [
 			{
+				test: /\.css$/,
+				use: [
+					'style-loader',
+					'css-loader'
+				]
+			},
+			{
+				test: /\.(png|svg|jpg|gif)$/,
+				use: [
+					'file-loader'
+				]
+			},
+			{
 			test: /\.(scss)$/,
 			use: [
-				{
-					loader: 'style-loader'
-				},
-				{
-					loader: 'css-loader'
-				},
+				'style-loader',
+				'css-loader',
+				'sass-loader',
 				{
 					loader: 'postcss-loader',
 					options: {
@@ -33,12 +43,13 @@ module.exports = {
 						];
 						}
 					}
-				},
-				{
-					loader: 'sass-loader'
 				}
 			]
 			}
 		]
 	}
 };
+
+externals: {
+  jquery: 'jQuery'
+}
