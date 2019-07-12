@@ -1,0 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SERPHunt</title>
+</head>
+<body>
+	{% include 'header.html' %}
+
+	{% block content %}{% endblock content %}
+
+	<script type="text/javascript" src="{% static 'main.js' %}"></script>
+</body>
+</html>

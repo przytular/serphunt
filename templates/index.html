@@ -1,11 +1,24 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-	<title>SERPHunt</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-	<script type="text/javascript" src="{% static 'main.js' %}"></script>
-</body>
-</html>
+{% block content %}
+<div class="container mt-3">
+	<div class="row">
+		<div class="col-12">
+			<form method="GET">
+		    <div class="form-group">
+				<div class="input-group">
+					<input type="text" class="my-auto form-control" id="keywords" name="keywords" />
+					<button type="button" class="btn btn-danger">Hunt!</button>
+				</div>
+		    </div>
+		</div>
+	</div>
+	<div class="row">
+		<div id="results" class="col-12">
+			<div class="alert alert-dismissible alert-secondary">
+			  <strong>Type in keywords above</strong> and start searching for Google results by clicking "Hunt!".
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock content %}
