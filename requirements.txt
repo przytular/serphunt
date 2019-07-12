@@ -4,6 +4,7 @@ chardet==3.0.4
 Django==2.2.3
 django-csp==3.5
 djangorestframework==3.9.4
+gunicorn==19.9.0
 idna==2.8
 pipenv==2018.11.26
 psycopg2==2.8.3
