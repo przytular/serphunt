@@ -11,5 +11,5 @@ class SearchResults(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 	created = models.DateTimeField(auto_now_add=True)
 	ip = models.GenericIPAddressField()
-	keywords = models.CharField(max_length=255)
+	keyword = models.CharField(max_length=255)
 	results = JSONField()
