@@ -17,6 +17,10 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 WEBPACK_DEV_SERVER = "localhost:8080"
 
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S'
+}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -107,11 +111,11 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
 
-USE_I18N = True
+USE_I18N = False
 
-USE_L10N = True
+USE_L10N = False
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
