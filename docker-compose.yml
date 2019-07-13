@@ -28,10 +28,8 @@ services:
     volumes:
       - .:/code
       - ./docker/nginx:/etc/nginx/conf.d
-      - django_core:/code/_core
     depends_on:
       - web
 
 volumes:
     node_modules_volume:
-    django_core:

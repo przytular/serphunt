@@ -1,17 +1,16 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.views.generic import TemplateView
 
 from rest_framework.routers import DefaultRouter
 
-from serp.views import IndexView, SearchViewSet
+from serp.views import IndexView, HistoryView, SearchViewSet
 
 router = DefaultRouter()
-router.register(r'keywords', SearchViewSet)
+router.register(r'keywords', SearchViewSet, basename='keywords')
 
 urlpatterns = [
 	path('', IndexView.as_view(), name='home'),
-	path('history/', TemplateView.as_view(template_name='history.html'), name='history'),
+	path('history/', HistoryView.as_view(), name='history'),
 
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),

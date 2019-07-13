@@ -20,26 +20,35 @@
 			<div class="alert-search alert alert-dismissible alert-secondary">
 			  <strong>Type in keywords above</strong> and start searching for Google results by clicking "Hunt!".
 			</div>
+			<div class="loading">Loading&#8230;</div>
 			<div id="results">
-				<h2>Top10</h2>
-				<table id="top10" class="table">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Website</th>
-						</tr>
-					</thead>
-				</table>
-
-				<h2>Popular keywords</h2>
-				<table id="keywords" class="table">
-					<thead>
-						<tr>
-							<th>Keyword</th>
-							<th>No of occurencies</th>
-						</tr>
-					</thead>
-				</table>
+				<small>Found <span id="results-counter"></span> results for keyword <span id="results-keyword"></span>.</small>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-7">
+							<h2>SERP Results</h2>
+							<table id="serp" class="table">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Website</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+						<div class="col-md-5">
+							<h2>Popular keywords</h2>
+							<table id="popular" class="table">
+								<thead>
+									<tr>
+										<th>Keyword</th>
+										<th># of times</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
