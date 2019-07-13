@@ -1,22 +1,18 @@
 {% extends 'base.html' %}
 
-{% block extendhead %}
+{% load crispy_forms_tags %}
 
+{% block extendhead %}
 {% endblock extendhead %}
 
 {% block content %}
 <div class="container mt-3">
 	<div class="row">
 		<div class="col-12">
-			<form id="search" method="GET">
-			    <div class="form-group">
-			    	<h1>Search</h1>
-					<div class="input-group">
-						<input type="text" class="my-auto form-control" id="keywords-input" name="keywords" />
-						<input type="submit" class="btn btn-danger" value="Hunt!">
-					</div>
-			    </div>
-			</form>
+			<div class="form-group">
+				<h1>Search</h1>
+				{% crispy form %}
+			</div>
 		</div>
 	</div>
 	<div class="row">

@@ -4,13 +4,13 @@ from django.views.generic import TemplateView
 
 from rest_framework.routers import DefaultRouter
 
-from serp.views import SearchViewSet
+from serp.views import IndexView, SearchViewSet
 
 router = DefaultRouter()
 router.register(r'keywords', SearchViewSet)
 
 urlpatterns = [
-	path('', TemplateView.as_view(template_name='index.html'), name='home'),
+	path('', IndexView.as_view(), name='home'),
 	path('history/', TemplateView.as_view(template_name='history.html'), name='history'),
 
     path('api/', include(router.urls)),
