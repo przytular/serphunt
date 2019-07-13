@@ -1,22 +1,39 @@
 version: '3'
 services:
-  web:
-    build: .
-    hostname: web
-    volumes:
-      - .:/code
-      - node_modules_container:/code/node_modules
-    ports:
-      - "8000:8000"
-      - "8080:8080"
-    depends_on:
-      - db
-    command: ["/code/wait-for-it.sh", "db:5432", "--", "bash", "/code/docker/web/web-entrypoint.sh"]
   db:
     hostname: db
     image: postgres:11.4
     expose:
       - "5432"
+  web:
+    build: .
+    hostname: web
+    volumes:
+      - .:/code
+      - node_modules_volume:/code/node_modules
+      - static_volume:/code/static
+    expose:
+      - "8000"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    command: ["/code/wait-for-it.sh", "db:5432", "--", "bash", "/code/docker/web/web-entrypoint.sh"]
+    stdin_open: true
+    tty: true
+  nginx:
+    hostname: nginx
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - .:/code
+      - ./docker/nginx:/etc/nginx/conf.d
+      - django_core:/code/_core
+    depends_on:
+      - web
 
 volumes:
-  node_modules_container:
+    node_modules_volume:
+    django_core:
+    static_volume:
