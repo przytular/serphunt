@@ -130,7 +130,7 @@ else:
 
 # Content Security Policy
 
-CSP_DEFAULT_SRC = ("'self'", WEBPACK_DEV_SERVER)
-CSP_SCRIPT_SRC = ("'self'", "*", WEBPACK_DEV_SERVER, "'unsafe-eval'")
+CSP_DEFAULT_SRC = ("'self'", WEBPACK_DEV_SERVER, "'unsafe-inline'", "data:")
+CSP_SCRIPT_SRC = ("'self'", "*", WEBPACK_DEV_SERVER, "'unsafe-inline'", "'unsafe-eval'")
 CSP_STYLE_SRC = ("'self'", WEBPACK_DEV_SERVER, "'unsafe-inline'")
 CSP_CONNECT_SRC = ("'self'", WEBPACK_DEV_SERVER, "ws:")
