@@ -2,10 +2,12 @@ from django import forms
 
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Submit, Div, Field
+from crispy_forms.layout import Layout, Submit, Div, Field, HTML
 from crispy_forms.bootstrap import FieldWithButtons
+from allauth.account.forms import LoginForm
 
 from .models import UserConfig
 
@@ -41,3 +43,25 @@ class UserConfigForm(forms.ModelForm):
 			Submit("submit", "Save", css_class='btn-primary')
 		)
 		self.fields['time_limit'].label = 'Scraper time limit for the same keyword (in seconds)'
+
+
+class LoginForm(LoginForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+        # Add magic stuff to redirect back.
+        self.helper.layout.append(
+            HTML(
+                "{% if redirect_field_value %}"
+                "<input type='hidden' name='{{ redirect_field_name }}'"
+                " value='{{ redirect_field_value }}' />"
+                "{% endif %}"
+            )
+        )
+        # Add submit button like in original form.
+        self.helper.layout.append(
+            HTML(
+                '<button class="btn btn-primary btn-block" type="submit">'
+                '%s</button>' % _('Sign In')
+            )
+        )

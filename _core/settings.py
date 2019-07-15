@@ -20,7 +20,6 @@ REST_FRAMEWORK = {
 SERP_SCRAPER_TIME_LIMIT = 300
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,10 +27,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'serp',
     'csp',
     'rest_framework',
-    'crispy_forms'
+    'crispy_forms',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount'
 ]
 
 MIDDLEWARE = [
@@ -64,6 +67,13 @@ TEMPLATES = [
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+# All auth
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_FORMS = {
+    "login": "serp.forms.LoginForm"
+}
 
 WSGI_APPLICATION = '_core.wsgi.application'
 
@@ -100,6 +110,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

@@ -12,9 +12,9 @@ urlpatterns = [
 	path('', IndexView.as_view(), name='home'),
 	path('history/', HistoryView.as_view(), name='history'),
 	path('config/', UserConfigView.as_view(), name='config'),
+	path('accounts/', include('allauth.urls')),
 
     path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
-
     path('admin/', admin.site.urls),
 ]
