@@ -3,15 +3,11 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '*pz6w-p&%30!nbi7xka8cavt*sse!3ehdo@saiuh)6pyq^wglv'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+SITE_ID = 1
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -20,6 +16,9 @@ WEBPACK_DEV_SERVER = "localhost:8080"
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S'
 }
+
+# SERP request time limit (in seconds).
+SERP_TIME_LIMIT = 300
 
 # Application definition
 
@@ -68,7 +67,6 @@ TEMPLATES = [
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = '_core.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

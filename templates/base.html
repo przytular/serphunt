@@ -7,7 +7,9 @@
 <body>
 	{% include 'header.html' %}
 
-	{% block content %}{% endblock content %}
+	<div class="container mt-3">
+		{% block content %}{% endblock content %}
+	</div>
 
 	<script type="text/javascript" src="{% static 'main.js' %}"></script>
 </body>
