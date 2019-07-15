@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">SERPHunt</a>
+  <a class="navbar-brand" href="{% url 'home' %}">SERPHunt</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -14,7 +14,10 @@
       </li>
     </ul>
     <div class="my-2 my-lg-0">
-		<a class="btn btn-primary my-2 my-sm-0 nav-link" href="#">Log in</a>
+      {% if request.user.is_authenticated %}
+        <a class="btn btn-info my-2 my-sm-0 nav-link" href="{% url 'config' %}">Config</a>
+      {% else %}
+      {% endif %}
     </div>
   </div>
 </nav>

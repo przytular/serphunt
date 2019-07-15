@@ -17,8 +17,7 @@ REST_FRAMEWORK = {
     'DATETIME_FORMAT': '%Y-%m-%d %H:%M:%S'
 }
 
-# SERP request time limit (in seconds).
-SERP_TIME_LIMIT = 300
+SERP_SCRAPER_TIME_LIMIT = 300
 
 # Application definition
 

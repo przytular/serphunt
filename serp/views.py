@@ -1,7 +1,8 @@
 import datetime
+from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, UpdateView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
@@ -9,11 +10,12 @@ from django.conf import settings
 from rest_framework import viewsets, mixins
 from rest_framework.response import Response
 
-from .models import SearchResults
+from .models import SearchResults, UserConfig
 from .serializers import SearchResultsSerializer
 from .permissions import OwnedSearchResult
-from .forms import SearchForm
+from .forms import SearchForm, UserConfigForm
 from .helpers import get_google_results
+
 
 class IndexView(FormView):
 	template_name = 'index.html'
@@ -23,6 +25,17 @@ class IndexView(FormView):
 @method_decorator(login_required, name='dispatch')
 class HistoryView(TemplateView):
 	template_name = 'history.html'
+
+
+@method_decorator(login_required, name='dispatch')
+class UserConfigView(UpdateView):
+	template_name = 'config.html'
+	model = UserConfig
+	form_class = UserConfigForm
+	success_url = reverse_lazy('config')
+
+	def get_object(self):
+		return self.model.objects.filter(user=self.request.user).first()
 
 
 class SearchViewSet(viewsets.GenericViewSet,
@@ -37,15 +50,20 @@ class SearchViewSet(viewsets.GenericViewSet,
 	def create(self, request, *args, **kwargs):
 		data = request.data.dict()
 		keyword = data.get('keyword')
-		data['user'] = request.user.pk if request.user.is_authenticated else None
+		user = request.user if request.user.is_authenticated else None
+		data['user'] = user.pk
 
-		# Check if search results already exists and check time limit.
+		# Check if search results already exists and check scraper time limit.
 		sr = SearchResults.objects.filter(
 			keyword=keyword,
 			user=data['user'])
-		sr = sr.first()
+		sr = sr.latest()
 		if sr:
-			time_limit = sr.created + datetime.timedelta(seconds=settings.SERP_TIME_LIMIT)
+			if request.user.is_authenticated:
+				tl = user.config.time_limit
+			else:
+				tl = settings.SERP_SCRAPER_TIME_LIMIT
+			time_limit = sr.created + datetime.timedelta(seconds=tl)
 			if datetime.datetime.now() < time_limit:
 				serializer = self.serializer_class(sr)
 				return Response(serializer.data)
