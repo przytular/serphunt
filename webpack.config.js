@@ -1,12 +1,17 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
 	mode: 'development',
-	entry: './static/js/app.js',
+	entry: {
+		main: './static/js/app.js',
+		index: './static/js/index.js',
+		history: './static/js/history.js'
+	},
 	output: {
-		filename: 'main.js',
-		path: path.resolve('./dist')
+		filename: '[name].js',
+		path: path.resolve('./dist'),
+		sourceMapFilename: '[file].map'
 	},
 	devServer: {
 		host: '0.0.0.0',
@@ -15,6 +20,10 @@ module.exports = {
 	},
 	module: {
 		rules: [
+			{	test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+				use: [ 'babel-loader' ]
+			},
 			{
 				test: /\.css$/,
 				use: [
@@ -47,9 +56,25 @@ module.exports = {
 			]
 			}
 		]
+	},
+	plugins: [
+		new webpack.ProvidePlugin({
+			'$': 'jquery',
+		})
+	],
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				commons: {
+					test: /[\\/]node_modules[\k\/]/,
+					name: 'vendors',
+					chunks: 'all'
+				}
+			}
+		}
 	}
 };
 
 externals: {
-  jquery: 'jQuery'
+	jquery: 'jQuery'
 }

@@ -4,13 +4,15 @@
 <head>
 	<title>SERPHunt</title>
 </head>
-<body>
+<body style="display:none;">
 	{% include 'header.html' %}
 
 	<div class="container mt-3">
 		{% block content %}{% endblock content %}
 	</div>
 
+	<script type="text/javascript" src="{% static 'vendors.js' %}"></script>
 	<script type="text/javascript" src="{% static 'main.js' %}"></script>
+	{% block extendfoot %}{% endblock extendfoot %}
 </body>
 </html>
