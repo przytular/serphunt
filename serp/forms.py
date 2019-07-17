@@ -9,7 +9,7 @@ from crispy_forms.layout import Layout, Submit, Div, Field, HTML
 from crispy_forms.bootstrap import FieldWithButtons
 from allauth.account.forms import LoginForm
 
-from .models import UserConfig
+from .models import UserConfig, SearchResults
 
 
 class SearchForm(forms.Form):
@@ -25,6 +25,18 @@ class SearchForm(forms.Form):
 		self.helper.layout = Layout(
 			FieldWithButtons('keyword', Submit("submit", "Hunt!", css_class='btn-danger'))
 		)
+
+
+class HistoryForm(forms.Form):
+	requests = forms.ModelChoiceField(queryset=SearchResults.objects.none(), required=False)
+
+	def __init__(self, *args, **kwargs):
+		user = kwargs.pop('user', None)
+		super().__init__(*args, **kwargs)
+		self.helper = FormHelper()
+		self.helper.form_id = 'history'
+		self.helper.form_action = reverse_lazy('keywords-list')
+		self.fields['requests'].queryset = SearchResults.objects.filter(user=user)
 
 
 class UserConfigForm(forms.ModelForm):

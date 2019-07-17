@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import JSONField
 from django.conf import settings
 
+
 class UserConfig(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='config')
 	time_limit = models.IntegerField(default=settings.SERP_SCRAPER_TIME_LIMIT)
@@ -17,3 +18,6 @@ class SearchResults(models.Model):
 
 	class Meta:
 		get_latest_by = 'created'
+
+	def __str__(self):
+		return "{} : {}".format(self.created.strftime(settings.DATETIME_FORMAT), self.keyword)
