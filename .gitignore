@@ -5,3 +5,5 @@ node_modules/
 package-lock.json
 dist/
 *.log
+static/admin/
+static/rest_framework
