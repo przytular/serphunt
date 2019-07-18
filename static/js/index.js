@@ -55,9 +55,16 @@ $(document).ready( function () {
 				$popular_table_dt.rows.add(results.popular);
 				$popular_table_dt.draw();
 
-				$results.show();
 				$('#results-counter').html(results.stats);
 				$('#results-keyword').html(data.keyword);
+				if (data.cache) {
+					$('#cache-results').show()
+				} else {
+					$('#cache-results').hide()
+				}
+				$("#ua-string").html(data.user_agent);
+
+				$results.show();
 			},
 			error: function(data)
 			{

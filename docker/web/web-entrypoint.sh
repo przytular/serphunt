@@ -12,6 +12,9 @@ npm run build
 # Start webpack development server
 npm start &
 
+# Collect user agents
+python manage.py scrape_user_agents
+
 # Start django development server
 python manage.py runserver 0.0.0.0:8000
 

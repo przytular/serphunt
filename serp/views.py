@@ -61,7 +61,9 @@ class SearchViewSet(viewsets.GenericViewSet,
 		if request.user.is_authenticated:
 			data['user'] = user.pk
 			scraper_limit_time = user.config.time_limit
+			ua = request.user.config.user_agent.string if request.user.config.user_agent else settings.DEFAULT_UA
 		else:
+			ua = settings.DEFAULT_UA
 			scraper_limit_time = settings.SERP_SCRAPER_TIME_LIMIT
 
 		# Check if search results already exists and check scraper time limit.
@@ -73,13 +75,15 @@ class SearchViewSet(viewsets.GenericViewSet,
 			time_limit = sr.created + datetime.timedelta(seconds=scraper_limit_time)
 			if datetime.datetime.now() < time_limit:
 				serializer = self.serializer_class(sr)
-				return Response(serializer.data)
+				data = serializer.data
+				data['cache'] = True
+				return Response(data)
 		except SearchResults.DoesNotExist:
 			pass
 
 		# Update serializer data dictionary with results and user IP
 		data.update({'ip': request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', '127.0.0.1'))})
-		data.update({"results": get_google_results(keyword)} if keyword else {"results": ""})
+		data.update({"results": get_google_results(keyword, ua)} if keyword else {"results": ""})
 
 		serializer = self.serializer_class(data=data)
 		if serializer.is_valid():

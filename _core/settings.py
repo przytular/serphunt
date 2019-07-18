@@ -21,6 +21,8 @@ REST_FRAMEWORK = {
 
 SERP_SCRAPER_TIME_LIMIT = 300
 
+DEFAULT_UA = 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101 Firefox/64.0'
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -36,7 +38,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'allauth',
     'allauth.account',
-    'allauth.socialaccount'
+    'allauth.socialaccount',
+    'spoof'
 ]
 
 MIDDLEWARE = [

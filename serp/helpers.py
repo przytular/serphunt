@@ -2,14 +2,15 @@ import json
 import requests
 import string
 import urllib.parse
+from django.conf import settings
 from django.utils.http import urlquote
 from bs4 import BeautifulSoup as bs
 from collections import Counter
 
 
-def get_google_results(keyword):
+def get_google_results(keyword, user_agent):
 	headers = {
-		'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:64.0) Gecko/20100101 Firefox/64.0'
+		'User-Agent': user_agent
 	}
 
 	r = requests.get('https://www.google.com/search?q={}'.format(urllib.parse.quote_plus(keyword),), headers=headers)
