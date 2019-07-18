@@ -6,7 +6,8 @@ module.exports = {
 	entry: {
 		main: './static/js/app.js',
 		index: './static/js/index.js',
-		history: './static/js/history.js'
+		history: './static/js/history.js',
+		proxies: './static/js/proxies.js',
 	},
 	output: {
 		filename: '[name].js',

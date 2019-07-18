@@ -2,18 +2,39 @@ import json
 import requests
 import string
 import urllib.parse
+import random
+
 from django.conf import settings
 from django.utils.http import urlquote
+
 from bs4 import BeautifulSoup as bs
 from collections import Counter
 
+from spoof.models import Proxy
 
-def get_google_results(keyword, user_agent):
+
+def get_google_results(keyword, user_agent, user):
+	if user.is_authenticated and user.config.use_proxy:
+		proxy = random.choice(Proxy.objects.all()).get_proxy_url()
+	else:
+		proxy = ''
+
+	print(proxy)
+
+	proxies = {
+		'http': proxy
+	}
+
 	headers = {
 		'User-Agent': user_agent
 	}
 
-	r = requests.get('https://www.google.com/search?q={}'.format(urllib.parse.quote_plus(keyword),), headers=headers)
+	url = 'https://www.google.com/search?q={}'.format(urllib.parse.quote_plus(keyword),)
+
+	r = requests.get(
+		url,
+		headers=headers,
+		proxies=proxies)
 
 	soup = bs(r.text, 'html.parser')
 	stats = soup.find('div', {'id': 'resultStats'}).text
@@ -42,5 +63,6 @@ def get_google_results(keyword, user_agent):
 	return json.dumps({
 		'stats': stats,
 		'serp': serp,
-		'popular': popular
+		'popular': popular,
+		'proxy': proxy
 	})

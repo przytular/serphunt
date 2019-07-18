@@ -7,7 +7,6 @@ class OwnedSearchResult(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         # if search result have no owner - don't apply permission rules
-        # (TODO: remove, only logged in users can make requests and see results).
         if obj.user == None:
             return True
 

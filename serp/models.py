@@ -11,6 +11,7 @@ class UserConfig(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='config')
 	time_limit = models.IntegerField(default=settings.SERP_SCRAPER_TIME_LIMIT)
 	user_agent = models.ForeignKey(UserAgent, on_delete=models.SET_NULL, null=True)
+	use_proxy = models.BooleanField(default=False)
 
 
 class SearchResults(models.Model):

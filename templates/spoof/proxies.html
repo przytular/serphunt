@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+	<div class="col-sm-5">
+		<div class="form-group">
+			<h1>Proxies</h1>
+			<small>Please provie each proxy in one line in format: USER:PASSWORD@HOST:PORT<br/>("USER:PASSWORD@" is optional)</small>
+			{% crispy form %}
+		</div>
+	</div>
+	<div class="col-sm-7">
+		<table id="table-proxies" class="table" data-url="{% url 'proxies-list' %}">
+			<thead>
+				<tr>
+					<th>Proxy</th>
+					<th></th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+{% endblock content %}
+
+{% block extendfoot %}
+	<script type="text/javascript" src="{% static 'proxies.js' %}"></script>
+{% endblock extendfoot %}

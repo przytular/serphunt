@@ -25,7 +25,7 @@ class IndexView(FormView):
 @method_decorator(login_required, name='dispatch')
 class HistoryView(FormView):
 	# TODO: Clear history
-	template_name = 'history.html'
+	template_name = 'serp/history.html'
 	form_class = HistoryForm
 
 	def get_form_kwargs(self):
@@ -36,7 +36,7 @@ class HistoryView(FormView):
 
 @method_decorator(login_required, name='dispatch')
 class UserConfigView(UpdateView):
-	template_name = 'config.html'
+	template_name = 'account/config.html'
 	model = UserConfig
 	form_class = UserConfigForm
 	success_url = reverse_lazy('config')
@@ -83,7 +83,7 @@ class SearchViewSet(viewsets.GenericViewSet,
 
 		# Update serializer data dictionary with results and user IP
 		data.update({'ip': request.META.get('HTTP_X_FORWARDED_FOR', request.META.get('REMOTE_ADDR', '127.0.0.1'))})
-		data.update({"results": get_google_results(keyword, ua)} if keyword else {"results": ""})
+		data.update({"results": get_google_results(keyword, ua, user)} if keyword else {"results": ""})
 
 		serializer = self.serializer_class(data=data)
 		if serializer.is_valid():

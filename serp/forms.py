@@ -42,7 +42,7 @@ class HistoryForm(forms.Form):
 class UserConfigForm(forms.ModelForm):
 	class Meta:
 		model = UserConfig
-		fields = ['time_limit', 'user_agent']
+		fields = ['time_limit', 'user_agent', 'use_proxy']
 
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
@@ -53,6 +53,7 @@ class UserConfigForm(forms.ModelForm):
 		self.helper.layout = Layout(
 			Field('time_limit'),
 			Field('user_agent'),
+			Field('use_proxy'),
 			Submit("submit", "Save", css_class='btn-primary')
 		)
 		self.fields['time_limit'].label = 'Scraper time limit for the same keyword (in seconds)'

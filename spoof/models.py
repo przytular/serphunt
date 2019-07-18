@@ -1,11 +1,24 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Proxy(models.Model):
-	ip = models.GenericIPAddressField(null=True, blank=True)
+	host = models.GenericIPAddressField(null=True, blank=True)
 	port = models.SmallIntegerField(default=8080)
-	user = models.CharField(max_length=30)
-	password = models.CharField(max_length=30)
+	proxy_user = models.CharField(max_length=30, null=True, blank=True)
+	password = models.CharField(max_length=30, null=True, blank=True)
+	user = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
+
+	class Meta:
+		unique_together = ('host', 'port')
+
+	def get_proxy_url(self, scheme='http'):
+		# http://USER:PASSWORD@HOST:PORT
+		url = "{}://".format(scheme,)
+		if self.user and self.password:
+			url += "{}:{}@".format(self.user, self.password)
+		url += "{}:{}".format(self.host, self.port)
+		return url
 
 
 class UserAgent(models.Model):
