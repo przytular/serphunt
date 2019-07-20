@@ -1,23 +1,28 @@
 import os
+import environ
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+env = environ.Env()
+env.read_env('../.env')
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = '*pz6w-p&%30!nbi7xka8cavt*sse!3ehdo@saiuh)6pyq^wglv'
+SECRET_KEY = env('SECRET_KEY', default='*do30%6&7ThD4bi7xka8cavt*sse!3ehdo@saiuh)6fo40gvos')
 
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=False)
 
 SITE_ID = 1
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = env('ALLOWED_HOSTS', default='127.0.0.1')
 
-WEBPACK_DEV_SERVER = "localhost:8080"
+WEBPACK_DEV_SERVER = env('WEBPACK_DEV_SERVER', default='localhost:8080')
 
 DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 REST_FRAMEWORK = {
     'DATETIME_FORMAT': DATETIME_FORMAT
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 SERP_SCRAPER_TIME_LIMIT = 300
 
@@ -71,9 +76,6 @@ TEMPLATES = [
     },
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-
 # All auth
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_FORMS = {
@@ -82,17 +84,14 @@ ACCOUNT_FORMS = {
 
 WSGI_APPLICATION = '_core.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'NAME': env('DB_NAME', default='postgres'),
+        'USER': env('DB_USER', default='postgres'),
+        'PASSWORD': env('DB_PASS', default='postgres'),
+        'HOST': env('DB_HOST', default='db'),
+        'PORT': env('DB_PORT', default=5432),
     }
 }
 
@@ -136,7 +135,6 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # In debug mode serve files from webpack dev server for auto reloading
@@ -145,9 +143,7 @@ if DEBUG:
 else:
     STATIC_URL = '/static/'
 
-
 # Content Security Policy
-
 CSP_DEFAULT_SRC = ("'self'", WEBPACK_DEV_SERVER, "'unsafe-inline'", "data:")
 CSP_SCRIPT_SRC = ("'self'", "*", WEBPACK_DEV_SERVER, "'unsafe-inline'", "'unsafe-eval'")
 CSP_STYLE_SRC = ("'self'", WEBPACK_DEV_SERVER, "'unsafe-inline'")
