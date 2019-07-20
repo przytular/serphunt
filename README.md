@@ -22,4 +22,9 @@ Frontend is handled by npm and webpack. There is also webpack-dev-server running
 $ docker-compose up
 ```
 
-After couple of minutes to boot there should be a development server running at http://localhost/
+### Useful commands (web container)
+
+Scrape browser user agents from useragentstring.com
+```shell
+$ ./manage.py scrape_user_agenst
+```
