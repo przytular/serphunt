@@ -14,7 +14,7 @@ from spoof.models import Proxy
 
 
 def get_google_results(keyword, user_agent, user):
-	if user.is_authenticated and user.config.use_proxy:
+	if user and user.is_authenticated and user.config.use_proxy:
 		proxy = random.choice(Proxy.objects.all()).get_proxy_url()
 	else:
 		proxy = ''

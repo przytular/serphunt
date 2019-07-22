@@ -13,5 +13,5 @@ class SearchResultsSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 	def get_user_agent(self, obj):
-		user_ua = obj.user.config.user_agent
+		user_ua = obj.user.config.user_agent if obj.user else None
 		return user_ua.string if user_ua else settings.DEFAULT_UA
