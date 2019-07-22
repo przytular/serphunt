@@ -2,7 +2,7 @@ import os
 import environ
 
 env = environ.Env()
-env.read_env('../.env')
+env.read_env('.env')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -12,7 +12,7 @@ DEBUG = env.bool('DEBUG', default=False)
 
 SITE_ID = 1
 
-ALLOWED_HOSTS = env('ALLOWED_HOSTS', default='127.0.0.1')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['*'])
 
 WEBPACK_DEV_SERVER = env('WEBPACK_DEV_SERVER', default='localhost:8080')
 
@@ -135,13 +135,14 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'dist')
 
 # In debug mode serve files from webpack dev server for auto reloading
 if DEBUG:
-    STATIC_URL = 'http://{}/static/'.format(WEBPACK_DEV_SERVER,)
+    STATIC_URL = env('STATIC_URL', default='http://{}/static/'.format(WEBPACK_DEV_SERVER,))
 else:
-    STATIC_URL = '/static/'
+    STATIC_URL = env('STATIC_URL', default='/static/')
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Content Security Policy
 CSP_DEFAULT_SRC = ("'self'", WEBPACK_DEV_SERVER, "'unsafe-inline'", "data:")

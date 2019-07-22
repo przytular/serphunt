@@ -26,7 +26,7 @@ $ docker-compose up
 
 ### Useful commands (web container)
 
-Scrape browser user agents from useragentstring.com
+Scrape browser user agents from useragentstring.com (already done on container build)
 ```shell
 $ ./manage.py scrape_user_agenst
 ```

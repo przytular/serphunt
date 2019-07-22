@@ -24,7 +24,7 @@ services:
     hostname: nginx
     image: nginx:latest
     ports:
-      - "8000:80"
+      - "8000:8000"
     volumes:
       - .:/code
       - ./docker/nginx:/etc/nginx/conf.d

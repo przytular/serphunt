@@ -3,9 +3,7 @@ env*/
 db.sqlite3
 node_modules/
 package-lock.json
-dist/
+dist/*
 *.log
-static/admin/
-static/rest_framework
 .env
 
